@@ -10,6 +10,6 @@ Feature: Miro login Page
     Then I open login page
     Then I Login with user2 "Shreya.april@gmail.com" and password "Shreya@89"
     Then I verify sticker on shared board
-    Then i close driver
+    Then I close driver
     
     

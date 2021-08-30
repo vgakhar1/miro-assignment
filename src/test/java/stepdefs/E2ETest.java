@@ -111,13 +111,13 @@ public class E2ETest {
 	@Then("^I verify sticker on shared board$")
 	public void i_verfiy_sticker_on_shared_board() throws Exception {
 		driver.findElement(By.cssSelector("#router-container-wrapper > div > div.dashboard > div.dashboard__inner > div.dashboard__columns > div.dashboard__content > div.boards-scroller.boards-scroller--with-pin > div > ng-transclude > div.boards-scroller__list-wrapper > div.boards-grid > div:nth-child(2) > div > div > div > div.board-brick__preview > div")).click();
-		driver.findElement(By.cssSelector("#board-canvas-container > div.canvas-fixed-container")).isDisplayed();
+		Thread.sleep(10000);
 		File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		File destination = new File("screenshot" + java.time.LocalTime.now() + ".png");
+		File destination = new File(("user.dir")+"screenshot" + ".png");
         FileUtils.copyFile(screenshot, destination);
 	}
 	
-	@Then("i close driver")
+	@Then("I close driver")
 	public void i_close_driver() throws Exception {
 	    driver.close();
 	}
