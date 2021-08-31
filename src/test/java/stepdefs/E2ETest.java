@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -58,12 +59,14 @@ public class E2ETest {
 	@Then("^I create new board$")
 	public void i_create_new_board() throws Exception {
 		System.out.print("creating new board");
-		if(driver.findElement(By.className("serviceCard__tile-3JdsV")).isEnabled()) {
-			driver.findElement(By.className("serviceCard__tile-3JdsV")).click();
+		driver.findElement(By.className("serviceCard__tile-3JdsV")).click();
+		try {
+			driver.findElement(By.cssSelector("body > board-will-be-shared > div > div > div > div > div.rtb-modal-content__actions.rtb-modal-actions > button.rtb-btn.rtb-btn--primary.rtb-btn--medium")).click();
+		}catch (Exception e) {
+			System.out.println("Shared Board Message doesnt come first time");
+		}finally {
+			driver.findElement(By.cssSelector("#react-modals-container > div > div > button > div")).click();
 		}
-		Thread.sleep(5000);
-		driver.findElement(By.cssSelector("body > board-will-be-shared > div > div > div > div > div.rtb-modal-content__actions.rtb-modal-actions > button.rtb-btn.rtb-btn--primary.rtb-btn--medium")).click();
-		driver.findElement(By.cssSelector("#react-modals-container > div > div > button > div")).click();
 	}
 
 	@Then("^I create new sticker$")
@@ -111,15 +114,16 @@ public class E2ETest {
 	@Then("^I verify sticker on shared board$")
 	public void i_verfiy_sticker_on_shared_board() throws Exception {
 		driver.findElement(By.cssSelector("#router-container-wrapper > div > div.dashboard > div.dashboard__inner > div.dashboard__columns > div.dashboard__content > div.boards-scroller.boards-scroller--with-pin > div > ng-transclude > div.boards-scroller__list-wrapper > div.boards-grid > div:nth-child(2) > div > div > div > div.board-brick__preview > div")).click();
-		Thread.sleep(10000);
-		File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		File destination = new File(("user.dir")+"screenshot" + ".png");
-        FileUtils.copyFile(screenshot, destination);
+		if (driver.findElement(By.cssSelector("#canvasContainer > div:nth-child(2) > div.board-top > div.board-top__left.board-top__left--expanded > div.board-top-left-panel.board-panel--transparent.backdrop-blur.board-panel--hidden-top > div.svg-button.board-top-left-panel__dashboard.board-top-left-panel__logo")).isDisplayed()){
+			File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			File destination = new File(("user.dir")+"screenshot" + ".png");
+			FileUtils.copyFile(screenshot, destination);
+		}
 	}
-	
+
 	@Then("I close driver")
 	public void i_close_driver() throws Exception {
-	    driver.close();
+		driver.close();
 	}
-	
-	}
+
+}
