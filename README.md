@@ -10,6 +10,11 @@ Steps To Run E2E test
 
 	5. Right click on the file and Run as Junit Test 
 
+	6. If you are creating the board or running the test first time then automation will wait for 10 secs after clicking create board button to close overlay window
+
+	7. Screenshot for verfication of sticker will be available here /miro-assignment/
+
+	8.Cucmber Reports can be seen here miro-assignment/target/cucumber-report/smoketest/
 
 
 Prerequisites:
