@@ -24,7 +24,7 @@ public class E2ETest {
 
 	@Given("^I have login page opened$")
 	public void i_have_login_page_opened() throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "/miro-assignment/driver/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"/driver/chromedriver.exe");
 		driver = new ChromeDriver();
 
 		driver.get("https://miro.com/login/"); //open login page in Chrome  browser
